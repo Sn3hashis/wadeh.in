@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Your Pharmacy - Cart{% endblock %}
+
+{% block content %}
+    <h2>Your Cart</h2>
+    {% if cart_items %}
+        <ul>
+            {% for item in cart_items %}
+                <li>
+                    {{ item[1] }} - ${{ item[3] }}
+                </li>
+            {% endfor %}
+        </ul>
+        <p>Total: ${{ "%.2f"|format(total) }}</p>
+        <a href="https://wa.me/?text=I'm%20interested%20in%20buying%20the%20following%20medicines%3A%0A{% for item in cart_items %}{{ item[1] }}%20-%20${{ item[3] }}%0A{% endfor %}Total%3A%20${{ "%.2f"|format(total) }}%0AFrom%20Your%20Pharmacy" class="button" target="_blank">Buy on WhatsApp</a>
+        <a href="{{ url_for('clear_cart') }}" class="button">Clear Cart</a>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+{% endblock %}

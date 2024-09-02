@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}Your Pharmacy - Home{% endblock %}
+
+{% block content %}
+    <h2>Welcome to Your Pharmacy</h2>
+    <p>We offer a wide range of medicines and healthcare products.</p>
+    
+    <h3>Testimonials</h3>
+    <div class="testimonial-carousel">
+        {% for testimonial in testimonials %}
+            <div class="testimonial">
+                <p>"{{ testimonial[2] }}"</p>
+                - {{ testimonial[1] }}
+            </div>
+        {% endfor %}
+    </div>
+    
+    <h3>Featured Medicines</h3>
+    <div class="medicine-list">
+        {% for medicine in medicines %}
+            <div class="medicine-item">
+                <img src="{{ medicine[4] }}" alt="{{ medicine[1] }}" class="medicine-image">
+                <h4>{{ medicine[1] }}</h4>
+                <p>{{ medicine[2] }}</p>
+                <p>Price: ${{ medicine[3] }}</p>
+                <a href="{{ url_for('add_to_cart', medicine_id=medicine[0]) }}" class="button">Add to Cart</a>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <h3>Book an Appointment</h3>
+    <form action="{{ url_for('book_appointment') }}" method="post">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="date" name="date" required>
+        <input type="time" name="time" required>
+        <button type="submit" class="button">Book Appointment</button>
+    </form>
+{% endblock %}
